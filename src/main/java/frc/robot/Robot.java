@@ -35,8 +35,8 @@ public class Robot extends TimedRobot {
 
   //private MainDrive driveCommand;
   SwerveSubsystem swerve = new SwerveSubsystem();
-  SparkMax elevator1;
-  SparkMax elevator2;
+  // SparkMax elevator1;
+  // SparkMax elevator2;
   DigitalInput elevatorBottom;
   DigitalInput elevatorTop;
 
@@ -61,10 +61,10 @@ public class Robot extends TimedRobot {
     controller1 = new XboxController( 0 );
     controller2 = new XboxController( 1 );
 
-    elevator1 = new SparkMax(15, MotorType.kBrushless);
-    elevator2 = new SparkMax(16, MotorType.kBrushless);
-    elevatorBottom = new DigitalInput(0);
-    elevatorTop    = new DigitalInput(1);
+    // elevator1 = new SparkMax(15, MotorType.kBrushless);
+    // elevator2 = new SparkMax(16, MotorType.kBrushless);
+    //elevatorBottom = new DigitalInput(0);
+    //elevatorTop    = new DigitalInput(1);
 
     spin = new SparkMax(17, MotorType.kBrushless);
     spinencoder = new CANcoder(20);
@@ -138,9 +138,9 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 
-    double elevatorspeed = controller2.getRightY();
-    boolean atTop = !elevatorTop.get();
-    boolean atBottom = !elevatorBottom.get();
+    // double elevatorspeed = controller2.getRightY();
+    // boolean atTop = !elevatorTop.get();
+    // boolean atBottom = !elevatorBottom.get();
     
    /**  
     if (controller2.getBButton()){
@@ -163,16 +163,16 @@ public class Robot extends TimedRobot {
     elevator2.set(0);
     }
 */
-    if (atBottom && elevatorspeed > 0) {
-      System.out.println("At Bottom");
-      elevatorspeed = 0;
-    }
-    if (atTop && elevatorspeed < 0) {
-      System.out.println("At Top");
-      elevatorspeed = 0;
-    }
-    elevator1.set(elevatorspeed);
-    elevator2.set(-elevatorspeed);
+    // if (atBottom && elevatorspeed > 0) {
+    //   System.out.println("At Bottom");
+    //   elevatorspeed = 0;
+    // }
+    // if (atTop && elevatorspeed < 0) {
+    //   System.out.println("At Top");
+    //   elevatorspeed = 0;
+    // }
+    //elevator1.set(elevatorspeed);
+    //elevator2.set(-elevatorspeed);
 
 
     double spinSpeed = 0.1;
