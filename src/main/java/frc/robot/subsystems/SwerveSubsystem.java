@@ -74,6 +74,10 @@ public class SwerveSubsystem extends SubsystemBase {
       Constants.MAX_SPEED/5.0);
     Translation2d translation = SwerveController.getTranslation2d(desiredSpeeds);
 
+    /*
+     * rotation = desiredSpeeds.omegaRadiansPerSecond
+    */
+
     swerveDrive.drive(
       translation,
       rotation,

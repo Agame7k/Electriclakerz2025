@@ -62,12 +62,12 @@ public class Robot extends TimedRobot {
     controller2 = new XboxController( 1 );
 
     elevator1 = new SparkMax(15, MotorType.kBrushless);
-    elevator2 = new SparkMax(16, MotorType.kBrushless);
+    // elevator 2 setup as inverted follower on can id 16
     elevatorBottom = new DigitalInput(0);
     elevatorTop    = new DigitalInput(1);
 
     spin = new SparkMax(17, MotorType.kBrushless);
-    spinencoder = new CANcoder(20);
+    //spinencoder = new CANcoder(20);
 
     climber = new SparkMax(22, MotorType.kBrushless);
 
@@ -154,13 +154,10 @@ public class Robot extends TimedRobot {
 
    /*  if(controller2.getleftStickAxses1 > .5 ) {
      elevator1.set(0.1);
-     elevator2.set(0.1);
     } else if (controller2.getleftStickAxes1 < .5) {
      elevator1.set(-0.1);
-     elevator2.set(-1.0);
     } else(controller2.getLeftStickAxses1 = 0 ) {
     elevator1.set(0);
-    elevator2.set(0);
     }
 */
     if (atBottom && elevatorspeed > 0) {
@@ -171,15 +168,14 @@ public class Robot extends TimedRobot {
       System.out.println("At Top");
       elevatorspeed = 0;
     }
-    elevator1.set(elevatorspeed);
-    elevator2.set(-elevatorspeed);
+    elevator1.set(-elevatorspeed);
 
 
     double spinSpeed = 0.1;
 
 
-    double spinPosition = spinencoder.getPosition().getValueAsDouble();
-    System.out.println(spinPosition);
+    //double spinPosition = spinencoder.getPosition().getValueAsDouble();
+    //System.out.println(spinPosition);
     if (controller2.getXButton()) {
       spin.set(spinSpeed); 
     } else if (controller2.getBButton()) {
