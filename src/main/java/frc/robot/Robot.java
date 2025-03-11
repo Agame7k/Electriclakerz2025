@@ -15,6 +15,8 @@ import javax.lang.model.util.ElementScanner14;
 
 import com.ctre.phoenix6.hardware.CANcoder;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.Encoder;
 
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -39,6 +41,8 @@ public class Robot extends TimedRobot {
   SparkMax elevator2;
   DigitalInput elevatorBottom;
   DigitalInput elevatorTop;
+
+  DutyCycleEncoder GrabberRotationEncoder;
 
   SparkMax spin;
   CANcoder spinencoder;
@@ -73,6 +77,8 @@ public class Robot extends TimedRobot {
 
     grabber1 = new SparkMax(18, MotorType.kBrushless);
     grabber2 = new SparkMax(19, MotorType.kBrushless);
+
+    GrabberRotationEncoder = new DutyCycleEncoder(2); 
 
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
@@ -194,17 +200,37 @@ public class Robot extends TimedRobot {
   }
 
 //I suspect that the left bumper is in and the right bumper is out
+if (GrabberRotationEncoder.get() <= 100 && GrabberRotationEncoder.get() >= 0) {
     double grabberSpeed = 0.6;
-    if (controller2.getLeftTriggerAxis() >0.5 ) {
+    if (controller2.getLeftTriggerAxis() >0.5 ) {  // my Rotation right?
       grabber1.set(grabberSpeed);
       grabber2.set(-grabberSpeed);
-    } else if (controller2.getRightTriggerAxis() >0.5 ) {
+    } else if (controller2.getRightTriggerAxis() >0.5 ) {  // my Rotation left?
       grabber1.set(-grabberSpeed);
       grabber2.set(grabberSpeed);
     } else{
       grabber1.set(0);
       grabber2.set(0);
-    }
+    }}
+else if (GrabberRotationEncoder.get() > 100){   // if my rotation is to far left I can only go right
+      double grabberSpeed = 0.6;
+  if (controller2.getLeftTriggerAxis() >0.5 ) {  // my Rotation right?
+    grabber1.set(grabberSpeed);
+    grabber2.set(-grabberSpeed);}  
+  else {
+    grabber1.set(0);
+    grabber2.set(0);
+  }}
+else if (GrabberRotationEncoder.get() < 0){  // if my rotation is to far right i can only go left
+      double grabberSpeed = 0.6;
+  if (controller2.getRightTriggerAxis() >0.5 ) {  // my Rotation left?
+    grabber1.set(-grabberSpeed);
+    grabber2.set(grabberSpeed);}
+  else {
+    grabber1.set(0);
+    grabber2.set(0);
+  }
+   
 
     /*
     double grabberConstant = 0.4;
@@ -225,7 +251,7 @@ public class Robot extends TimedRobot {
     double y = controller1.getLeftY();
     double rotation = controller1.getRightX();
 
-    swerve.drive(x, y, rotation);
+    swerve.drive(x, y, rotation);};
   }
 
   @Override
